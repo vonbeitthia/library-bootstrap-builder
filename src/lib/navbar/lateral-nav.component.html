@@ -1,0 +1,107 @@
+<div class="bs-modal-backdrop">
+	<div class="bs-lateral-flex-container" [ngClass]="cssTransitionClass()">
+		<div class="bs-lateral-flex-items">
+			<div class="me-0">
+				<button
+					class="btn p-3 bg-transparent text-light"
+					type="button"
+					(click)="onNavigate('toggler')"
+				>
+					<span class="lnr lnr-chevron-right"></span>
+				</button>
+			</div>
+		</div>
+		<div class="bs-lateral-flex-items">
+			<div class="col-12 pt-3">
+				<div class="accordion bg-dark">
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button
+								class="accordion-button"
+								[ngClass]="{ collapsed: !dropmenuHome }"
+								type="button"
+								(click)="mostrarDropHome()"
+							>
+								<span class="lnr lnr-home accordion-icon"></span>
+							</button>
+						</h2>
+						<div
+							class="accordion-collapse collapse"
+							[ngClass]="{ 'show fadeIn animated': dropmenuHome }"
+						>
+							<div
+								class="accordion-body text-uppercase"
+								[ngClass]="{
+									'fadeOut animated': salirDrop
+								}"
+							>
+								<div *ngFor="let item of sinSubmenu">
+									
+										<a
+											class="nav-lateral-icon text-secondary"
+											(click)="onNavigate(item.enlace ?? item.nombre)"
+										>
+											<span
+												[class]="
+													(item.icono ?? 'lnr lnr-chevron-right') +
+													' accordion-icon2'
+												"
+											></span>
+											{{ item.nombre }}
+										</a>
+									</div>
+								</div>
+							</div>
+						
+					</div>
+					<div class="accordion-item" *ngFor="let item of conSubmenu">
+					
+							<h2 class="accordion-header">
+								<button
+									class="accordion-button text-uppercase"
+									[ngClass]="{ collapsed: !item.openState }"
+									(click)="mostrarDrop(item, $event)"
+									type="button"
+								>
+									<span
+										*ngIf="item.icono"
+										[class]="item.icono + ' accordion-icon2'"
+									></span>
+									{{ item.nombre }}
+								</button>
+							</h2>
+							<div
+								class="accordion-collapse collapse"
+								[ngClass]="{ 'show fadeIn animated': item.openState }"
+							>
+								<div
+									class="accordion-body text-uppercase"
+									[ngClass]="{
+										'fadeOut animated': item.closeState
+									}"
+								>
+									<ul>
+										<li *ngFor="let submenu of item.contenido">
+											<a
+												class="nav-lateral-icon text-secondary"
+												(click)="onNavigate(submenu.enlace)"
+											>
+												<span
+													[class]="
+														(submenu.icono ?? 'lnr lnr-chevron-right') +
+														' accordion-icon2'
+													"
+												></span>
+												{{ submenu.item }}
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			
+		</div>
+	</div>
+</div>

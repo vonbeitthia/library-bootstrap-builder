@@ -1,0 +1,35 @@
+<div BsVisible (isVisible)="onVisible($event)" [offset]="0.3" style="background-color: black;">
+  <section
+    class="bs-slider-container"
+    BsScroll
+    [elem]="[el]"
+    [horizontal]="true"
+    (onScrollH)="scrollH($event)"
+    [style.height]="tamImagen"
+  >
+    <section tabindex="0" class="bs-slider-secondary" #bsslide *ngFor="let imagen of listaImagenes; index as ind" [ngClass]="{'carousel-pointer' : zoomCursor}" [style.justifyContent]="objImagen[ind]['posicion']['horizontal']">
+      <section class="d-none d-sm-flex bs-slider-buttons">
+        <a (click)="getParentElement($event)">
+          <span class="arrow rotar-180" data-sentido="izquierda"></span>
+        </a>
+        <a (click)="getParentElement($event)">
+          <span class="arrow" data-sentido="derecha"></span>
+        </a>
+      </section>
+      <section
+        class="bs-slider-title py-2"
+        *ngIf="titulos[ind]"
+        [style.alignSelf]="objImagen[ind]['posicion']['vertical']"
+        [ngClass]="objImagen[ind]['posicion']['color']"
+      >
+        <h1 [class]="titulos[ind]?.color">{{titulos[ind]?.texto}}</h1>
+        <h5 [class]="subtitulos[ind]?.color">{{subtitulos[ind]?.texto}}</h5>
+       <div *ngFor="let boton of objImagen[ind]['botones']; index as i">
+            <a href="#" class="btn btn-sm" [ngClass]="boton.color" tabindex="-1" role="button" aria-disabled="true">{{boton?.texto}}</a>
+            
+          </div>
+      </section>
+      <img [src]="imagen" />
+    </section>
+  </section>
+</div>

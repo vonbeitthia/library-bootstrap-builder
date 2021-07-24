@@ -1,0 +1,43 @@
+<div class="navbar-collapse" [ngClass]="{collapse: !mostrarDropdown}">
+      <ul class="navbar-nav">
+        <li class="nav-item" 
+          *ngFor="let opcion of menu">
+          <a
+            *ngIf="!opcion.contenido; else DropMenu"
+            class="nav-link"
+            (click)="onClickNav(opcion.enlace ?? opcion.nombre, opcion.codigo)" 
+            [ngClass]="{'text-secondary': itemActual === opcion.codigo}"
+          >
+            <span *ngIf="opcion.icono" [class]="opcion.icono"></span>
+            <span class="d-sm-none d-md-inline" > {{ opcion.nombre }} </span>
+          </a>
+          <ng-template #DropMenu>
+            <!--submenus-->
+            <a class="nav-link dropdown-toggle" (click)="openDrop(opcion, opcion.codigo)"
+            [ngClass]="{'text-secondary': itemActual === opcion.codigo}">
+            <span *ngIf="opcion.icono" [class]="opcion.icono"></span>
+              <span class="d-sm-none d-md-inline">
+                {{ opcion.nombre }}
+              </span></a
+            >
+            <div
+              class="dropdown-menu fadeIn"
+              [ngClass]="{
+                'show animated': opcion.openState,
+                fadeOut: opcion.closeState
+              }"
+              aria-labelledby="navbarDropdown"
+            >
+              <a
+                class="dropdown-item"
+                *ngFor="let subitem of opcion.contenido"
+                (click)="onClickNav(subitem.enlace, opcion.codigo)"
+              >
+                <span *ngIf="subitem.icono" [class]="subitem.icono"></span>
+                {{ subitem.item }}</a
+              >
+            </div>
+          </ng-template>
+        </li>
+      </ul>
+    </div>
